@@ -1,27 +1,32 @@
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
-#define int 					long long
-#define endl 					'\n'
-#define vb						vector<bool>
-#define vbb						vector<vb>
-#define vi 						vector<int>
-#define vvi 					vector<vector<int>>
-#define inf						1e18
-#define setbits(x)				__builtin_popcountll(x)
-#define loop(i,a,b)				for(int i = a; i<=b; i+=1)
-#define revloop(i,a,b)			for(int i = a; i>=b; i-=1)
-#define pii						pair<int,int>
-#define w(x)					int x; cin >> x; while(x--)
-#define pb 						push_back
-#define ust						unordered_set
-#define ump						unordered_map
-#define ff 						first
-#define ss  				    second
-#define bug(...)       			__f (#__VA_ARGS__, __VA_ARGS__)
-#define printV(v)				for(auto &it: v) cout<<it<<" "; cout<<endl;
-#define all(v)      			v.begin(),v.end()
-#define inp(i)  				int i; cin >> i;
+#define int 									long long
+#define endl 									'\n'
+#define vb									vector<bool>
+#define vbb									vector<vb>
+#define vi 									vector<int>
+#define vvi 									vector<vector<int>>
+#define inf									1e18
+#define setbits(x)								__builtin_popcountll(x)
+#define loop(i,a,b)								for(int i = a; i<=b; i+=1)
+#define revloop(i,a,b)								for(int i = a; i>=b; i-=1)
+#define pii									pair<int,int>
+#define w(x)									int x; cin >> x; while(x--)
+#define pb 									push_back
+#define ust									unordered_set
+#define ump									unordered_map
+#define ff 									first
+#define ss  				   				        second
+#define bug(...)       								__f (#__VA_ARGS__, __VA_ARGS__)
+#define printV(v)								for(auto &it: v) cout<<it<<" "; cout<<endl;
+#define all(v)      								v.begin(),v.end()
+#define inp(i)  								int i; cin >> i;
+#define inp2(i,j)								int i,j; cin >> i >> j;
+#define inp3(i,j,k)								int i,j,k; cin >> i >> j >> k;
+#define inp4(i,j,k,l)								int i,j,k,l; cin >> i >> j >> k >> l;
+#define inparr(arr, n)								inp(n); vi arr(n); for(auto &it: arr) cin >> it;
+#define MOD									1000000007ll
 
 using namespace std;
 using namespace __gnu_pbds;
@@ -35,6 +40,8 @@ void __f (const char* names, Arg1&& arg1, Args&&... args)
 	const char* comma = strchr (names + 1, ',');
 	cout.write (names, comma - names) << " : " << arg1 << " | "; __f (comma + 1, args...);
 }
+
+
 
 void solve()
 {
