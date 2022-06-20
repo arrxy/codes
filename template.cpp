@@ -31,7 +31,8 @@ author: arrxy
 #define inp4(i,j,k,l)               int i,j,k,l; cin >> i >> j >> k >> l;
 #define inparr(arr, n)              inp(n); vi arr(n); for(auto &it: arr) cin >> it;
 #define MOD                         1000000007ll
-#define fill(a,b)       	    memset(a, b, sizeof(a))
+#define fill(a,b)       	        memset(a, b, sizeof(a))
+#define uniq(v)           		    (v).erase(unique(all(v)),(v).end())
 using namespace std;
 using namespace __gnu_pbds;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
