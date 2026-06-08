@@ -27,8 +27,7 @@ author: arrxy
 #include <random>
 #include <chrono>
 
-// #include <ext/pb_ds/assoc_container.hpp>
-// #include <ext/pb_ds/tree_policy.hpp>
+
 #define int                         long long
 #define endl                        '\n'
 #define vb                          vector<bool>
@@ -37,16 +36,11 @@ author: arrxy
 #define vvi                         vector<vector<int>>
 #define inf                         1e18
 #define setbits(x)                  __builtin_popcountll(x)
-#define loop(i,a,b)                 for(int i = a; i<=b; i+=1)
-#define revloop(i,a,b)              for(int i = a; i>=b; i-=1)
 #define pii                         pair<int,int>
 #define w(x)                        int x; cin >> x; while(x--)
 #define pb                          push_back
-#define ust                         unordered_set
-#define ump                         unordered_map
-#define ff                          first
-#define ss                          second
-#define bug(...)                    __f (#__VA_ARGS__, __VA_ARGS__)
+#define F                          first
+#define S                          second
 #define printV(v)                   for(auto &it: v) cout<<it<<" "; cout<<endl;
 #define printVV(v)                  for(auto &it: v) {printV(it);}
 #define all(v)                      v.begin(),v.end()
@@ -54,22 +48,17 @@ author: arrxy
 #define inp2(i,j)                   int i,j; cin >> i >> j;
 #define inp3(i,j,k)                 int i,j,k; cin >> i >> j >> k;
 #define inp4(i,j,k,l)               int i,j,k,l; cin >> i >> j >> k >> l;
-#define inparr(arr, n)              inp(n); vi arr(n); for(auto &it: arr) cin >> it;
+#define inparr(arr, n)              arr.resize(n, 0); for(auto &it: arr) cin >> it;
 #define MOD                         1000000007ll
 #define fill(a,b)       	        memset(a, b, sizeof(a))
 #define uniq(v)           		    (v).erase(unique(all(v)),(v).end())
 using namespace std;
+
+// ########################## POLICY BASED DATA STRUCTURE ################################
+// #include <ext/pb_ds/assoc_container.hpp>
+// #include <ext/pb_ds/tree_policy.hpp>
 // using namespace __gnu_pbds;
 // typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
- 
-template <typename Arg1>
-void __f (const char* name, Arg1&& arg1) { cout << name << " : " << arg1 << endl; }
-template <typename Arg1, typename... Args>
-void __f (const char* names, Arg1&& arg1, Args&&... args)
-{
-    const char* comma = strchr (names + 1, ',');
-    cout.write (names, comma - names) << " : " << arg1 << " | "; __f (comma + 1, args...);
-}
 
 // ########################## NUMBER THEORY #############################################
 int binexp(int a, int b, int m = MOD) {
@@ -85,7 +74,7 @@ int binexp(int a, int b, int m = MOD) {
 }
 vi fact(1000005, 1);
 void calcfact() {
-    loop(i, 1, 1000004) {
+    for (int i = 1; i <= 1000004; ++i) {
         fact[i] = (fact[i - 1] % MOD * i % MOD) % MOD; 
     }
 }
@@ -109,8 +98,103 @@ int phi(int n) {
         result -= result / n;
     return result;
 }
+// ########################## SEGMENT TREE #############################################
+
+struct SegmentTree {
+public:
+    vector<int> tree;
+    int N;
+
+    SegmentTree(vector<int>& arr) {
+        N = arr.size();
+        tree.resize(4 * N + 1);
+
+        if (N > 0) {
+            build(arr);
+        }
+    }
+
+    void build(vector<int>& arr) {
+        build(arr, 1, 0, N - 1);
+    }
+
+    void update(int idx, int val) {
+        if (idx < 0 || idx >= N) return;
+        update(idx, val, 1, 0, N - 1);
+    }
+
+    int query(int start, int end) {
+        if (N == 0) return defaultVal();
+
+        start = max(start, 0ll);
+        end = min(end, N - 1);
+
+        if (start > end) return defaultVal();
+
+        return query(start, end, 1, 0, N - 1);
+    }
+
+private:
+    int op(int a, int b) {
+        return a + b;
+    }
+
+    int defaultVal() {
+        return 0;
+    }
+
+    void build(vector<int>& arr, int node, int start, int end) {
+        if (start == end) {
+            tree[node] = arr[start];
+            return;
+        }
+
+        int mid = (start + end) >> 1;
+
+        build(arr, node << 1, start, mid);
+        build(arr, node << 1 | 1, mid + 1, end);
+
+        tree[node] = op(tree[node << 1], tree[node << 1 | 1]);
+    }
+
+    void update(int idx, int val, int node, int start, int end) {
+        if (start == end) {
+            tree[node] = val;
+            return;
+        }
+
+        int mid = (start + end) >> 1;
+
+        if (idx <= mid) {
+            update(idx, val, node << 1, start, mid);
+        } else {
+            update(idx, val, node << 1 | 1, mid + 1, end);
+        }
+
+        tree[node] = op(tree[node << 1], tree[node << 1 | 1]);
+    }
+
+    int query(int queryStart, int queryEnd, int node, int start, int end) {
+        if (start >= queryStart && end <= queryEnd) {
+            return tree[node];
+        }
+
+        if (queryStart > end || queryEnd < start) {
+            return defaultVal();
+        }
+
+        int mid = (start + end) >> 1;
+
+        return op(
+            query(queryStart, queryEnd, node << 1, start, mid),
+            query(queryStart, queryEnd, node << 1 | 1, mid + 1, end)
+        );
+    }
+};
 
 //######################################################################################
+
+
 
 void solve()
 {
